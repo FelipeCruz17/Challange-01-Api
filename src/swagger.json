@@ -1,0 +1,100 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge - SOLID introduction",
+    "description": "This API documentation has been written on purpose of understanding and explaining it's parameters, routes, responses and so on.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Felipe Cruz",
+      "email": "feemattioli@gmail.com",
+      "url": "https://github.com/felipecruz17"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new User",
+        "description": "Route responsible for create a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "John Doe",
+                  "email": "johndoe@johndoe.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "New User created"
+          },
+          "400": {
+            "description": "Error message when a new User inserts an e-mail that had been used by another User."
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List all Users",
+        "description": "This route should list all Users without params",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "header",
+            "description": "ID of user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/:user_id": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Transform an User into an administrator",
+        "description": "This route should receive the User ID from route params and transform an User into an administrator User"
+      }
+    }
+  }
+}
