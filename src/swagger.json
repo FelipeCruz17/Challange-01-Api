@@ -52,9 +52,9 @@
         "description": "This route should list all Users without params",
         "parameters": [
           {
-            "name": "userId",
+            "name": "user_id",
             "in": "header",
-            "description": "ID of user",
+            "description": "User ID from header params",
             "required": true,
             "schema": {
               "type": "string"
@@ -85,16 +85,102 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Error message when a non admin user try to list all users."
           }
         }
       }
     },
-    "/users/:user_id": {
+    "/users/:user_id":{
+      "get": {
+        "tags": ["User"],
+        "summary": "Should be able to get user profile by ID",
+        "description": "This route should receive a User ID from URL params and find the information about a specific User.",
+        "parameters": [{
+          "name": "user_id",
+          "in": "path",
+          "description": "User ID from URL params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Erro message when try to find a non existing user "
+          }
+        }
+      }
+    },
+    "/users/:user_id/admin": {
       "patch": {
         "tags": ["User"],
-        "summary": "Transform an User into an administrator",
-        "description": "This route should receive the User ID from route params and transform an User into an administrator User"
+        "summary": "Transform a User into an administrator",
+        "description": "This route should receive the User ID from route params and transform a User into an administrator User",
+        "parameters": [{
+          "name": ":user_id",
+          "in": "path",
+          "description": "User ID from URL params",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error message when a non existing user as admin."
+          }
+        }
+        }
       }
     }
-  }
 }
